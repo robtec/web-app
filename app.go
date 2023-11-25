@@ -26,7 +26,7 @@ func main() {
 	}
 
 	r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "hi")
+		c.String(http.StatusOK, conn.Config().Host)
 	})
 
 	r.GET("/ping", func(c *gin.Context) {

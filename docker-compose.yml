@@ -8,3 +8,5 @@ services:
     container_name: web-app
     pull_policy: build
     build: .
+    ports:
+      - "8080:8080"

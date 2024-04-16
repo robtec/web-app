@@ -11,7 +11,7 @@ func main() {
 	route := gin.Default()
 
 	route.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "This is the api, part 2")
+		c.String(http.StatusOK, "This is the api")
 	})
 
 	route.GET("/pong", func(c *gin.Context) {

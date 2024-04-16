@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+
+  web-app:
+    image: web-app
+    restart: always
+    container_name: web-app
+    pull_policy: build
+    build: .

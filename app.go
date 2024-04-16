@@ -8,17 +8,17 @@ import (
 
 func main() {
 
-	r := gin.Default()
+	route := gin.Default()
 
-	r.GET("/", func(c *gin.Context) {
+	route.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "This is the api, part 2")
 	})
 
-	r.GET("/pong", func(c *gin.Context) {
+	route.GET("/pong", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "ping",
 		})
 	})
 
-	r.Run(":8080")
+	route.Run(":8080")
 }

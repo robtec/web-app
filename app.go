@@ -11,7 +11,7 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "This is the api")
+		c.String(http.StatusOK, "This is the api, part 2")
 	})
 
 	r.GET("/pong", func(c *gin.Context) {

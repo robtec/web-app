@@ -1,9 +1,9 @@
 package main
 
 import (
-	"net/http"
 	"flag"
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,5 +26,5 @@ func main() {
 		})
 	})
 
-	route.Run(fmt.Printf(":%s", *port))
+	route.Run(fmt.Sprintf(":%s", *port))
 }

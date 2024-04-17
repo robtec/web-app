@@ -2,11 +2,17 @@ package main
 
 import (
 	"net/http"
+	"flag"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
+var port = flag.String("addr", "8080", "http port")
+
 func main() {
+
+	flag.Parse()
 
 	route := gin.Default()
 
@@ -20,5 +26,5 @@ func main() {
 		})
 	})
 
-	route.Run(":8080")
+	route.Run(fmt.Printf(":%s", *port))
 }

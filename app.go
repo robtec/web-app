@@ -9,9 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var port = flag.String("p", "8080", "http port")
-
 func main() {
+
+	var (
+		port        string
+	)
+
+	flag.StringVar(&port, "port", "8080", "http port")
 
 	flag.Parse()
 

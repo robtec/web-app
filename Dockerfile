@@ -1,5 +1,7 @@
 FROM golang:1.20-alpine3.19
 
+RUN apk update -y && apk add curl -y
+
 WORKDIR /app
 
 COPY go.mod go.sum ./

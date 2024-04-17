@@ -1,6 +1,6 @@
 FROM golang:1.20-alpine3.19
 
-RUN apk update -y && apk add curl -y
+RUN apk update & apk add curl
 
 WORKDIR /app
 

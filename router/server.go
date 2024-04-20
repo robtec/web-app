@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,11 +18,12 @@ func RunHTTPServer(ctx context.Context, port string) (err error) {
 
 	tm := time.Now()
 
-	cly := colly.NewCollector()
+	cly := colly.NewCollector(
+		colly.UserAgent("Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion"),
+	)
 
-	// Find and visit all links
-	cly.OnHTML("a[href]", func(e *colly.HTMLElement) {
-		e.Request.Visit(e.Attr("href"))
+	cly.OnHTML("div.lower-footer", func(e *colly.HTMLElement) {
+		fmt.Println(strings.Replace(e.Text, "\n", "", -1))
 	})
 
 	cly.OnRequest(func(r *colly.Request) {
@@ -49,10 +51,18 @@ func RunHTTPServer(ctx context.Context, port string) (err error) {
 
 	router.GET("/scrape", func(c *gin.Context) {
 
-		cly.Visit("http://go-colly.org/")
+		urlQ := c.Query("url")
+
+		err := cly.Visit(urlQ)
+
+		var msg = "all good"
+
+		if err != nil {
+			msg = err.Error()
+		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"message": "ping",
+			"message": msg,
 		})
 	})
 

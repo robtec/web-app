@@ -18,12 +18,15 @@ func RunHTTPServer(ctx context.Context, port string) (err error) {
 
 	tm := time.Now()
 
+	var msg = "all good"
+
 	cly := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion"),
+		colly.AllowURLRevisit(),
 	)
 
-	cly.OnHTML("div.lower-footer", func(e *colly.HTMLElement) {
-		fmt.Println(strings.Replace(e.Text, "\n", "", -1))
+	cly.OnHTML("footer", func(e *colly.HTMLElement) {
+		msg = strings.Replace(e.Text, "\n", "", -1)
 	})
 
 	cly.OnRequest(func(r *colly.Request) {
@@ -55,14 +58,13 @@ func RunHTTPServer(ctx context.Context, port string) (err error) {
 
 		err := cly.Visit(urlQ)
 
-		var msg = "all good"
-
 		if err != nil {
 			msg = err.Error()
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"message": msg,
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"title": msg,
+			"time":  fmt.Sprintf("%s", tm),
 		})
 	})
 

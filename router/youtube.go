@@ -95,11 +95,15 @@ func Youtube(c *gin.Context) {
 		return
 	}
 
-	numberStr := response.Items[0].Stats.Subscribers
+	if len(response.Items) > 0 {
+		numberStr := response.Items[0].Stats.Subscribers
 
-	number, _ := strconv.Atoi(numberStr)
+		number, _ := strconv.Atoi(numberStr)
 
-	c.JSON(http.StatusOK, gin.H{
-		"number": number,
-	})
+		c.JSON(http.StatusOK, gin.H{
+			"number": number,
+		})
+	}
+
+	c.JSON(http.StatusOK, response)
 }

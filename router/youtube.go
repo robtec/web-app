@@ -103,6 +103,7 @@ func Youtube(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"number": number,
 		})
+		return
 	}
 
 	c.JSON(http.StatusOK, response)

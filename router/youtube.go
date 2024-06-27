@@ -29,6 +29,8 @@ type Stats struct {
 
 func Youtube(c *gin.Context) {
 
+	var requiredParams = []string{"id", "key"}
+
 	var response Response
 
 	client := &http.Client{}
@@ -42,18 +44,13 @@ func Youtube(c *gin.Context) {
 		return
 	}
 
-	if _, ok := c.GetQueryArray("key"); !ok {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"missing parameter": "key",
-		})
-		return
-	}
-
-	if _, ok := c.GetQueryArray("id"); !ok {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"missing parameter": "id",
-		})
-		return
+	for _, v := range requiredParams {
+		if _, ok := c.GetQueryArray(v); !ok {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"missing parameter": v,
+			})
+			return
+		}
 	}
 
 	q := req.URL.Query()
@@ -75,7 +72,7 @@ func Youtube(c *gin.Context) {
 
 	defer resp.Body.Close()
 
-	fmt.Println("Response Status: ", resp.Status)
+	fmt.Println("Youtube API: ", resp.Status)
 
 	body, _ := io.ReadAll(resp.Body)
 

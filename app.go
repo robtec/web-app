@@ -2,19 +2,19 @@ package main
 
 import (
 	"context"
-	"flag"
+	"os"
 	"robtec/webapp/router"
 )
 
+var defaultPort = "8080"
+
 func main() {
 
-	var (
-		port string
-	)
+	port := os.Getenv("PORT")
 
-	flag.StringVar(&port, "port", "8080", "http port")
-
-	flag.Parse()
+	if port == "" {
+		port = defaultPort
+	}
 
 	ctx := context.Background()
 
